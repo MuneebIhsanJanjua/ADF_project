@@ -50,6 +50,9 @@
 				},
 				{
 					"name": "derivedGenderFlag"
+				},
+				{
+					"name": "FilterGreaterThen25"
 				}
 			],
 			"scriptLines": [
@@ -97,7 +100,8 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"OnpremDimPassenger derive(GenderFlag = iif(gender == 'M', 'Male', iif(gender == 'F', 'Female', gender))) ~> derivedGenderFlag"
+				"OnpremDimPassenger derive(GenderFlag = iif(gender == 'M', 'Male', iif(gender == 'F', 'Female', gender))) ~> derivedGenderFlag",
+				"derivedGenderFlag filter(age>= 25) ~> FilterGreaterThen25"
 			]
 		}
 	}
