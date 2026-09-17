@@ -1,0 +1,20 @@
+{
+	"name": "df_Sql_Parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Is_datalake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "sql",
+				"fileSystem": "bronze"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

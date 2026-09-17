@@ -24,6 +24,20 @@
 						"type": "DatasetReference"
 					},
 					"name": "OnpremDimPassenger"
+				},
+				{
+					"dataset": {
+						"referenceName": "df_Giithub_DimAirport",
+						"type": "DatasetReference"
+					},
+					"name": "GtithubDimAirpot"
+				},
+				{
+					"dataset": {
+						"referenceName": "df_Sql_Parquet",
+						"type": "DatasetReference"
+					},
+					"name": "SqlPaquet"
 				}
 			],
 			"sinks": [],
@@ -37,7 +51,15 @@
 				"     ignoreNoFilesFound: false) ~> OnpremDimFlight",
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> OnpremDimPassenger"
+				"     ignoreNoFilesFound: false) ~> OnpremDimPassenger",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'documentPerLine') ~> GtithubDimAirpot",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> SqlPaquet"
 			]
 		}
 	}

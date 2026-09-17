@@ -1,0 +1,20 @@
+{
+	"name": "df_Giithub_DimAirport",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Is_datalake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "DimAirport.json",
+				"folderPath": "github",
+				"fileSystem": "bronze"
+			}
+		},
+		"schema": {}
+	}
+}
