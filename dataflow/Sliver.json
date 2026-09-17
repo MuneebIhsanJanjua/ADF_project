@@ -47,6 +47,9 @@
 				},
 				{
 					"name": "select1"
+				},
+				{
+					"name": "derivedGenderFlag"
 				}
 			],
 			"scriptLines": [
@@ -93,7 +96,8 @@
 				"          arrival_time",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1"
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"OnpremDimPassenger derive(GenderFlag = iif(gender == 'M', 'Male', iif(gender == 'F', 'Female', gender))) ~> derivedGenderFlag"
 			]
 		}
 	}
