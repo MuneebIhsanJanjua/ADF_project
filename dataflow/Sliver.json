@@ -1,0 +1,44 @@
+{
+	"name": "Sliver",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "df_onprem_airline",
+						"type": "DatasetReference"
+					},
+					"name": "OnpremDimAirline"
+				},
+				{
+					"dataset": {
+						"referenceName": "df_onprem_flight",
+						"type": "DatasetReference"
+					},
+					"name": "OnpremDimFlight"
+				},
+				{
+					"dataset": {
+						"referenceName": "df_onprem_passenger",
+						"type": "DatasetReference"
+					},
+					"name": "OnpremDimPassenger"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> OnpremDimAirline",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> OnpremDimFlight",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> OnpremDimPassenger"
+			]
+		}
+	}
+}
