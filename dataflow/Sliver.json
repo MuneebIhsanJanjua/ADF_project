@@ -55,7 +55,7 @@
 					"name": "FilterGreaterThen25"
 				},
 				{
-					"name": "castCost"
+					"name": "castTicket"
 				}
 			],
 			"scriptLines": [
@@ -96,7 +96,19 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     documentForm: 'documentPerLine') ~> GtithubDimAirpot",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          booking_id as integer,",
+				"          passenger_id as integer,",
+				"          flight_id as integer,",
+				"          airline_id as integer,",
+				"          origin_airport_id as integer,",
+				"          destination_airport_id as integer,",
+				"          booking_date as date,",
+				"          ticket_cost as decimal(10,2),",
+				"          flight_duration_mins as integer,",
+				"          checkin_status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'parquet') ~> SqlPaquet",
@@ -111,10 +123,10 @@
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"OnpremDimPassenger derive(GenderFlag = iif(gender == 'M', 'Male', iif(gender == 'F', 'Female', gender))) ~> derivedGenderFlag",
 				"derivedGenderFlag filter(age>= 25) ~> FilterGreaterThen25",
-				"GtithubDimAirpot cast(output(",
-				"          airport_id as short",
+				"SqlPaquet cast(output(",
+				"          ticket_cost as integer",
 				"     ),",
-				"     errors: true) ~> castCost"
+				"     errors: true) ~> castTicket"
 			]
 		}
 	}
