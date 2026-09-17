@@ -1,0 +1,44 @@
+{
+	"name": "Onprem_file",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Is_onprem_file",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"p_first_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation",
+				"fileName": {
+					"value": "@dataset().p_first_name",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "airline_id",
+				"type": "String"
+			},
+			{
+				"name": "airline_name",
+				"type": "String"
+			},
+			{
+				"name": "country",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

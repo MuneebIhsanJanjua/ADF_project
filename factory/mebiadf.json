@@ -1,0 +1,15 @@
+{
+	"name": "mebiadf",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "germanywestcentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "6ce6d6f5-c877-42a4-824e-98467c913763",
+		"tenantId": "43d2115b-a55e-46b6-9df7-b03388ecfc60"
+	}
+}
