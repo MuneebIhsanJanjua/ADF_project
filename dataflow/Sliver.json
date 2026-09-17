@@ -53,6 +53,9 @@
 				},
 				{
 					"name": "FilterGreaterThen25"
+				},
+				{
+					"name": "castCost"
 				}
 			],
 			"scriptLines": [
@@ -83,7 +86,13 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> OnpremDimPassenger",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          airport_id as short,",
+				"          airport_name as string,",
+				"          city as string,",
+				"          country as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     documentForm: 'documentPerLine') ~> GtithubDimAirpot",
@@ -101,7 +110,11 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"OnpremDimPassenger derive(GenderFlag = iif(gender == 'M', 'Male', iif(gender == 'F', 'Female', gender))) ~> derivedGenderFlag",
-				"derivedGenderFlag filter(age>= 25) ~> FilterGreaterThen25"
+				"derivedGenderFlag filter(age>= 25) ~> FilterGreaterThen25",
+				"GtithubDimAirpot cast(output(",
+				"          airport_id as short",
+				"     ),",
+				"     errors: true) ~> castCost"
 			]
 		}
 	}
