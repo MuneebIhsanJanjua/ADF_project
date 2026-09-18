@@ -273,6 +273,7 @@
 				"     compressionType: 'snappy',",
 				"     compressionLevel: 'Fastest',",
 				"     fileSystem: 'sliver',",
+				"     folderPath: 'Factbooking',",
 				"     mergeSchema: false,",
 				"     autoCompact: false,",
 				"     optimizedWrite: false,",
