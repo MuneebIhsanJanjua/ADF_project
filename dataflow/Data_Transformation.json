@@ -1,5 +1,5 @@
 {
-	"name": "Sliver",
+	"name": "Data_Transformation",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
