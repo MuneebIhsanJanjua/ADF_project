@@ -56,6 +56,9 @@
 				},
 				{
 					"name": "castTicket"
+				},
+				{
+					"name": "alterRow1"
 				}
 			],
 			"scriptLines": [
@@ -126,7 +129,8 @@
 				"SqlPaquet cast(output(",
 				"          ticket_cost as integer",
 				"     ),",
-				"     errors: true) ~> castTicket"
+				"     errors: true) ~> castTicket",
+				"derivedColumnCountry alterRow() ~> alterRow1"
 			]
 		}
 	}
