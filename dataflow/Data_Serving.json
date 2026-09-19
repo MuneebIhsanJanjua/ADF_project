@@ -39,6 +39,9 @@
 				},
 				{
 					"name": "window1"
+				},
+				{
+					"name": "FilterTop5Sales"
 				}
 			],
 			"scriptLines": [
@@ -101,7 +104,8 @@
 				"selectColumns aggregate(groupBy(airline_name),",
 				"     total_sales = sum(ticket_cost)) ~> AggregateAirline",
 				"AggregateAirline window(desc(total_sales, true),",
-				"     top = denseRank()) ~> window1"
+				"     top = denseRank()) ~> window1",
+				"window1 filter(top < 6) ~> FilterTop5Sales"
 			]
 		}
 	}
