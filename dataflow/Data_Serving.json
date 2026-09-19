@@ -42,6 +42,21 @@
 				},
 				{
 					"name": "FilterTop5Sales"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "selectColumn"
+				},
+				{
+					"name": "AggregateFighNumber"
+				},
+				{
+					"name": "windowTop"
+				},
+				{
+					"name": "filterTop5"
 				}
 			],
 			"scriptLines": [
@@ -56,7 +71,13 @@
 				"     format: 'delta',",
 				"     fileSystem: 'sliver',",
 				"     folderPath: 'DimAirline') ~> DimAirline",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          flight_id as short,",
+				"          flight_number as string,",
+				"          departure_timestamp as string,",
+				"          arrival_time as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'delta',",
@@ -105,7 +126,37 @@
 				"     total_sales = sum(ticket_cost)) ~> AggregateAirline",
 				"AggregateAirline window(desc(total_sales, true),",
 				"     top = denseRank()) ~> window1",
-				"window1 filter(top < 6) ~> FilterTop5Sales"
+				"window1 filter(top < 6) ~> FilterTop5Sales",
+				"DimFlight, JoinDimAline join(DimFlight@flight_id == FactBooking@flight_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 select(mapColumn(",
+				"          flight_id = DimFlight@flight_id,",
+				"          flight_number,",
+				"          departure_timestamp,",
+				"          arrival_time,",
+				"          booking_id,",
+				"          passenger_id,",
+				"          airline_id = FactBooking@airline_id,",
+				"          origin_airport_id,",
+				"          destination_airport_id,",
+				"          booking_date,",
+				"          ticket_cost,",
+				"          flight_duration_mins,",
+				"          checkin_status,",
+				"          airline_id = DimAirline@airline_id,",
+				"          airline_name,",
+				"          country",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectColumn",
+				"selectColumn aggregate(groupBy(airline_name),",
+				"     total_flight = count(flight_number)) ~> AggregateFighNumber",
+				"AggregateFighNumber window(asc(total_flight, true),",
+				"     top = denseRank()) ~> windowTop",
+				"windowTop filter(top >=5) ~> filterTop5"
 			]
 		}
 	}
