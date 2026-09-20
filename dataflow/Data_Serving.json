@@ -154,7 +154,8 @@
 				"     skipDuplicateMapOutputs: true) ~> selectColumn",
 				"selectColumn aggregate(groupBy(airline_name),",
 				"     total_flight = count(flight_number)) ~> AggregateFighNumber",
-				"AggregateFighNumber window(top = denseRank()) ~> windowTop",
+				"AggregateFighNumber window(asc(airline_name, true),",
+				"     top = denseRank()) ~> windowTop",
 				"windowTop filter(top >=5) ~> filterTop5"
 			]
 		}
