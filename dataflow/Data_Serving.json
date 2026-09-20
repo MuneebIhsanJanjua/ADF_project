@@ -26,7 +26,22 @@
 					"name": "FactBooking"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"linkedService": {
+						"referenceName": "Is_datalake",
+						"type": "LinkedServiceReference"
+					},
+					"name": "SinkDimgFlightGold"
+				},
+				{
+					"linkedService": {
+						"referenceName": "Is_datalake",
+						"type": "LinkedServiceReference"
+					},
+					"name": "sinkDimAirlineGold"
+				}
+			],
 			"transformations": [
 				{
 					"name": "JoinDimAline"
@@ -57,6 +72,12 @@
 				},
 				{
 					"name": "filterTop5"
+				},
+				{
+					"name": "alterRow1"
+				},
+				{
+					"name": "alterRow2"
 				}
 			],
 			"scriptLines": [
@@ -156,7 +177,47 @@
 				"     total_flight = count(flight_number)) ~> AggregateFighNumber",
 				"AggregateFighNumber window(desc(total_flight, true),",
 				"     top = denseRank()) ~> windowTop",
-				"windowTop filter(top < 6) ~> filterTop5"
+				"windowTop filter(top < 6) ~> filterTop5",
+				"filterTop5 alterRow(upsertIf(1==1)) ~> alterRow1",
+				"FilterTop5Sales alterRow(upsertIf(1==1)) ~> alterRow2",
+				"alterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'delta',",
+				"     fileSystem: 'gold',",
+				"     folderPath: 'BusinessViewFlight',",
+				"     overwrite: true,",
+				"     mergeSchema: false,",
+				"     autoCompact: false,",
+				"     optimizedWrite: false,",
+				"     vacuum: 0,",
+				"     deletable: false,",
+				"     insertable: false,",
+				"     updateable: false,",
+				"     upsertable: false,",
+				"     keys:['airline_name'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkDimgFlightGold",
+				"alterRow2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'delta',",
+				"     fileSystem: 'gold',",
+				"     folderPath: 'BussinesViewAirline',",
+				"     mergeSchema: false,",
+				"     autoCompact: false,",
+				"     optimizedWrite: false,",
+				"     vacuum: 0,",
+				"     deletable: false,",
+				"     insertable: true,",
+				"     updateable: false,",
+				"     upsertable: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkDimAirlineGold"
 			]
 		}
 	}
