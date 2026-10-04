@@ -1,5 +1,5 @@
-## Azure Data Factory End-to-End Data Engineering Project
-Project
+# Azure Data Factory End-to-End Data Engineering Project
+## Project
 Overview
 
 This project demonstrates the design and implementation of a modern Azure Data Factory (ADF) data pipeline. The solution ingests data from multiple sources, stores raw data in Azure Data Lake Storage, applies transformations through data flows, and builds curated analytical datasets using a Bronze, Silver, and Gold architecture.
