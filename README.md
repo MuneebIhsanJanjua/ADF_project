@@ -15,6 +15,5 @@ Create reusable and scalable data pipelines.
 
 ## Architecture Diagram
  
-<p align="center">
-<img src="picture/re_diagram.png
-</p>
+
+picture/architecture_diagram.png
