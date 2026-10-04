@@ -13,4 +13,8 @@ Apply transformations using Mapping Data Flows.
 Organise data using Bronze, Silver, and Gold layers.
 Create reusable and scalable data pipelines.
 
-
+## Architecture Diagram
+ 
+<p align="center">
+<img src="picture/re_diagram.png
+</p>
